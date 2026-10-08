@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "admin@glasspos.com",
+      "password": "password123"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 200) {
+          pm.collectionVariables.set("token", pm.response.json().data.token);
+      }
+    language: text/javascript
+order: 1000

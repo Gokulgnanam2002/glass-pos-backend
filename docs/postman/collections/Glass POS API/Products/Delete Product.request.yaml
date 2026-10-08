@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/products/<paste_product_uuid_here>"
+method: DELETE
+headers:
+  Authorization: Bearer {{token}}
+order: 5000
