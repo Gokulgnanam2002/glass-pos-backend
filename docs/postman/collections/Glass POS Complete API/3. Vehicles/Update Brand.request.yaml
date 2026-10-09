@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/brands/22222222-2222-2222-2222-222222222222"
+method: PATCH
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "code": "HYUNDAI"
+    }
+order: 7000

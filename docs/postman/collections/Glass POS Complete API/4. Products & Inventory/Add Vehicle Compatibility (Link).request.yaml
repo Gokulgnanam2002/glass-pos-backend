@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{base_url}}/products/77777777-7777-7777-7777-777777777777/compatibility"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "variantId": "88888888-8888-8888-8888-888888888888",
+      "glassPosition": "FRONT_WINDSHIELD"
+    }
+order: 6000

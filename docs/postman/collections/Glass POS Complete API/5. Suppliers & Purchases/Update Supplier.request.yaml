@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/suppliers/99999999-9999-9999-9999-999999999999"
+method: PATCH
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "phone": "9999999999"
+    }
+order: 4000

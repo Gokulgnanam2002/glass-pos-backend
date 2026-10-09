@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/customers/20202020-2020-2020-2020-202020202020"
+method: GET
+headers:
+  Authorization: Bearer {{admin_token}}
+order: 3000

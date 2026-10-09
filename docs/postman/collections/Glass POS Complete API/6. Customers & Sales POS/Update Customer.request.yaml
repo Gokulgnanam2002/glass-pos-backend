@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/customers/20202020-2020-2020-2020-202020202020"
+method: PATCH
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "phone": "8888888888"
+    }
+order: 4000

@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/variants"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "modelId": "33333333-3333-3333-3333-333333333333",
+      "name": "Asta",
+      "code": "ASTA",
+      "yearFrom": 2018,
+      "yearTo": 2022
+    }
+order: 13000

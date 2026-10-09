@@ -1,0 +1,37 @@
+$kind: http-request
+url: "{{base_url}}/sales"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "customerId": "20202020-2020-2020-2020-202020202020",
+      "subTotal": 3500,
+      "taxAmount": 980,
+      "cgstAmount": 490,
+      "sgstAmount": 490,
+      "igstAmount": 0,
+      "discount": 0,
+      "grandTotal": 4480,
+      "items": [
+        {
+          "productId": "77777777-7777-7777-7777-777777777777",
+          "productName": "Hyundai Santro Windshield",
+          "sku": "GLS-SAN-FR",
+          "hsnCode": "70072190",
+          "quantity": 1,
+          "unitPrice": 3500,
+          "discount": 0,
+          "taxableValue": 3500,
+          "gstRate": 28,
+          "cgstAmount": 490,
+          "sgstAmount": 490,
+          "igstAmount": 0,
+          "totalAmount": 4480
+        }
+      ]
+    }
+order: 5000

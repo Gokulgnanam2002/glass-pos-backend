@@ -50,10 +50,23 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
+const addVehicleCompatibility = async (req, res, next) => {
+  try {
+    const record = await productService.addVehicleCompatibility(req.params.id, req.body);
+    return sendSuccess(res, record, 201);
+  } catch (err) {
+    if (err.code === 'P2002') {
+      return res.status(400).json({ success: false, message: 'This vehicle is already linked to this product' });
+    }
+    next(err);
+  }
+};
+
 module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProduct,
   deleteProduct,
+  addVehicleCompatibility,
 };

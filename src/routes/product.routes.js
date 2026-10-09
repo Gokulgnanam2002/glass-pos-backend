@@ -11,6 +11,7 @@ router.post('/', authorize('ADMIN'), validate(createProductSchema), productContr
 router.get('/', productController.getAllProducts);
 router.get('/:id', productController.getProductById);
 router.patch('/:id', authorize('ADMIN'), validate(updateProductSchema), productController.updateProduct);
+router.post('/:id/compatibility', authorize('ADMIN'), productController.addVehicleCompatibility);
 router.delete('/:id', authorize('ADMIN'), productController.deleteProduct);
 
 module.exports = router;

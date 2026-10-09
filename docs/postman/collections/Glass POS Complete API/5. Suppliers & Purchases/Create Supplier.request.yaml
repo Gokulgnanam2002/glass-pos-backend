@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/suppliers"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "AIS Glass Wholesale",
+      "gstin": "29ABCDE1234F1Z5",
+      "phone": "9876543210",
+      "email": "contact@aisglass.com",
+      "address": "Mumbai, India"
+    }
+order: 1000

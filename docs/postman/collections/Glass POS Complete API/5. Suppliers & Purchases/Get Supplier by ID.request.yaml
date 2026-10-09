@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/suppliers/99999999-9999-9999-9999-999999999999"
+method: GET
+headers:
+  Authorization: Bearer {{admin_token}}
+order: 3000

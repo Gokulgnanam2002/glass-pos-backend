@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/products/77777777-7777-7777-7777-777777777777"
+method: GET
+headers:
+  Authorization: Bearer {{admin_token}}
+order: 3000

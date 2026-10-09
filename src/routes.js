@@ -6,6 +6,11 @@ const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const productRoutes = require('./routes/product.routes');
 const vehicleRoutes = require('./routes/vehicle.routes');
+const supplierRoutes = require('./routes/supplier.routes');
+const purchaseRoutes = require('./routes/purchase.routes');
+const customerRoutes = require('./routes/customer.routes');
+const salesRoutes = require('./routes/sales.routes');
+const roleRoutes = require('./routes/role.routes');
 
 router.get('/health', async (req, res) => {
   try {
@@ -29,5 +34,10 @@ router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/products', productRoutes);
 router.use('/vehicles', vehicleRoutes);
+router.use('/suppliers', supplierRoutes);
+router.use('/purchases', purchaseRoutes);
+router.use('/customers', customerRoutes);
+router.use('/sales', salesRoutes);
+router.use('/rbac', roleRoutes);
 
 module.exports = router;

@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/brands"
+method: GET
+order: 6000

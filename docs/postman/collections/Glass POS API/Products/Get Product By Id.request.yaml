@@ -1,6 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/products/<paste_product_uuid_here>"
-method: GET
-headers:
-  Authorization: Bearer {{token}}
-order: 3000

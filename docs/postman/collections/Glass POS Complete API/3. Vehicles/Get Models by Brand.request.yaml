@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/models?brandId=22222222-2222-2222-2222-222222222222"
+method: GET
+queryParams:
+  brandId: 22222222-2222-2222-2222-222222222222
+order: 10000

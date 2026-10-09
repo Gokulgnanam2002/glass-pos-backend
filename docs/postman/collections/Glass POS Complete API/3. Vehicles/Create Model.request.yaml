@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/models"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "brandId": "22222222-2222-2222-2222-222222222222",
+      "name": "i20",
+      "code": "I20"
+    }
+order: 9000

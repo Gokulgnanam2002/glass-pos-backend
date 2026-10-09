@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/sales/30303030-3030-3030-3030-303030303030/payments"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "amount": 4480,
+      "paymentMethod": "CASH",
+      "paymentDate": "2026-10-09T00:00:00Z"
+    }
+order: 8000

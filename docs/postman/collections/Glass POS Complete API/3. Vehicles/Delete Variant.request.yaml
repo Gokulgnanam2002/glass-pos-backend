@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/variants/44444444-4444-4444-4444-444444444444"
+method: DELETE
+headers:
+  Authorization: Bearer {{admin_token}}
+order: 16000

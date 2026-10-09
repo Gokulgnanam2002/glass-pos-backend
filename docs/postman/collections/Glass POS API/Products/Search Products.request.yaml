@@ -1,8 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/products?search=santro"
-method: GET
-headers:
-  Authorization: Bearer {{token}}
-queryParams:
-  search: santro
-order: 2000

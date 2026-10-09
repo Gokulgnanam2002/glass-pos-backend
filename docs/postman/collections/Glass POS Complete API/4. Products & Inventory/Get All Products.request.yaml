@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{base_url}}/products?search=Hyundai"
+method: GET
+headers:
+  Authorization: Bearer {{admin_token}}
+queryParams:
+  search: Hyundai
+order: 2000

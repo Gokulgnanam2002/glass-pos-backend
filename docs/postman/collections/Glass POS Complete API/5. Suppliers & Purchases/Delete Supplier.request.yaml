@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/suppliers/99999999-9999-9999-9999-999999999999"
+method: DELETE
+headers:
+  Authorization: Bearer {{admin_token}}
+order: 5000

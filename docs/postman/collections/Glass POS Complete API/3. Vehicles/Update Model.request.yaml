@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/vehicles/models/33333333-3333-3333-3333-333333333333"
+method: PATCH
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Elite i20"
+    }
+order: 11000

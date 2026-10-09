@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{base_url}}/sales/30303030-3030-3030-3030-303030303030/post"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+order: 7000

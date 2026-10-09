@@ -1,0 +1,15 @@
+# Use this workspace to collaborate
+workspace:
+  id: 041e6cf4-2c6e-4ab7-8e75-73b95defdf26
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/Glass POS Complete API: b4db90a6-07ef-4ca9-a6b1-aa47fa29c002
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

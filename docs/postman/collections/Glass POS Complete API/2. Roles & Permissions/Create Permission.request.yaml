@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{base_url}}/rbac/permissions"
+method: POST
+headers:
+  Authorization: Bearer {{admin_token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "code": "reports.view",
+      "module": "reports",
+      "description": "View business reports"
+    }
+order: 1000

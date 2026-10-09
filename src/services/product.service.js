@@ -112,10 +112,22 @@ const deleteProduct = async (id) => {
   return prisma.product.delete({ where: { id } });
 };
 
+const addVehicleCompatibility = async (productId, data) => {
+  return prisma.vehicleGlass.create({
+    data: {
+      productId,
+      variantId: data.variantId,
+      glassPosition: data.glassPosition
+    },
+    include: { variant: { include: { model: { include: { brand: true } } } } }
+  });
+};
+
 module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProduct,
   deleteProduct,
+  addVehicleCompatibility,
 };

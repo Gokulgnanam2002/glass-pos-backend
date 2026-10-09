@@ -1,0 +1,5 @@
+$kind: collection
+description: Comprehensive API collection with FULL CRUD operations.
+variables:
+  base_url: http://localhost:5000/api
+  admin_token: PASTE_TOKEN_HERE

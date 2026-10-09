@@ -1,295 +1,499 @@
 {
-  "info": {
-    "name": "Glass POS API",
-    "description": "API Collection for Glass POS Backend",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:3000/api",
-      "type": "string"
-    },
-    {
-      "key": "token",
-      "value": "",
-      "type": "string"
-    }
-  ],
-  "item": [
-    {
-      "name": "System",
-      "item": [
-        {
-          "name": "Health Check",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/health"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Auth",
-      "item": [
-        {
-          "name": "Login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    pm.collectionVariables.set(\"token\", pm.response.json().data.token);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@glasspos.com\",\n  \"password\": \"password123\"\n}"
-            },
-            "url": "{{baseUrl}}/auth/login"
-          }
-        },
-        {
-          "name": "Register",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Test Admin\",\n  \"email\": \"admin2@glasspos.com\",\n  \"password\": \"password123\",\n  \"role\": \"ADMIN\"\n}"
-            },
-            "url": "{{baseUrl}}/auth/register"
-          }
-        },
-        {
-          "name": "Get Me",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/auth/me"
-          }
-        },
-        {
-          "name": "Forgot Password",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@glasspos.com\"\n}"
-            },
-            "url": "{{baseUrl}}/auth/forgot-password"
-          }
-        },
-        {
-          "name": "Reset Password",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"token\": \"<paste_token_here>\",\n  \"newPassword\": \"newpassword123\"\n}"
-            },
-            "url": "{{baseUrl}}/auth/reset-password"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Products",
-      "item": [
-        {
-          "name": "Create Product",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Santro Front Windshield\",\n  \"productType\": \"GLASS\",\n  \"hsnCode\": \"70072190\",\n  \"unit\": \"PCS\",\n  \"purchasePrice\": 2500.00,\n  \"sellingPrice\": 4500.00,\n  \"gstRate\": 28.00,\n  \"variantId\": \"<paste_variant_uuid_here>\",\n  \"glassPosition\": \"FRONT_WINDSHIELD\",\n  \"openingStock\": 10,\n  \"minStockLevel\": 5\n}"
-            },
-            "url": "{{baseUrl}}/products"
-          }
-        },
-        {
-          "name": "Search Products",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/products?search=santro",
-              "host": ["{{baseUrl}}"],
-              "path": ["products"],
-              "query": [
-                { "key": "search", "value": "santro" }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Product By Id",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/products/<paste_product_uuid_here>"
-          }
-        },
-        {
-          "name": "Update Product",
-          "request": {
-            "method": "PUT",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"sellingPrice\": 5000.00\n}"
-            },
-            "url": "{{baseUrl}}/products/<paste_product_uuid_here>"
-          }
-        },
-        {
-          "name": "Delete Product",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/products/<paste_product_uuid_here>"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Vehicles",
-      "item": [
-        {
-          "name": "Create Category",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Passenger Car\",\n  \"code\": \"PC\"\n}"
-            },
-            "url": "{{baseUrl}}/vehicles/categories"
-          }
-        },
-        {
-          "name": "Get All Categories",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/vehicles/categories"
-          }
-        },
-        {
-          "name": "Create Brand",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"categoryId\": \"<paste_category_uuid_here>\",\n  \"name\": \"Honda\",\n  \"code\": \"HON\"\n}"
-            },
-            "url": "{{baseUrl}}/vehicles/brands"
-          }
-        },
-        {
-          "name": "Get All Brands",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/vehicles/brands"
-          }
-        },
-        {
-          "name": "Create Model",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"brandId\": \"<paste_brand_uuid_here>\",\n  \"name\": \"City\",\n  \"code\": \"CTY\"\n}"
-            },
-            "url": "{{baseUrl}}/vehicles/models"
-          }
-        },
-        {
-          "name": "Get All Models",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/vehicles/models"
-          }
-        },
-        {
-          "name": "Create Variant",
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" },
-              { "key": "Content-Type", "value": "application/json" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"modelId\": \"<paste_model_uuid_here>\",\n  \"name\": \"Gen 3\",\n  \"code\": \"G3\",\n  \"yearFrom\": 2008,\n  \"yearTo\": 2013\n}"
-            },
-            "url": "{{baseUrl}}/vehicles/variants"
-          }
-        },
-        {
-          "name": "Get All Variants",
-          "request": {
-            "method": "GET",
-            "header": [
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "url": "{{baseUrl}}/vehicles/variants"
-          }
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "c62b2169-7988-4cf5-99bc-1ab3dfa06670",
+		"name": "Glass POS Complete API",
+		"description": "Comprehensive API collection with FULL CRUD operations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@glasspos.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {"raw": "{{base_url}}/auth/login", "host": ["{{base_url}}"], "path": ["auth", "login"]}
+					}
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"New Staff\",\n  \"email\": \"staff@glasspos.com\",\n  \"password\": \"password123\",\n  \"role\": \"STAFF\",\n  \"phone\": \"9876543210\"\n}"
+						},
+						"url": {"raw": "{{base_url}}/auth/register", "host": ["{{base_url}}"], "path": ["auth", "register"]}
+					}
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@glasspos.com\"\n}"
+						},
+						"url": {"raw": "{{base_url}}/auth/forgot-password", "host": ["{{base_url}}"], "path": ["auth", "forgot-password"]}
+					}
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"<paste_token_here>\",\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {"raw": "{{base_url}}/auth/reset-password", "host": ["{{base_url}}"], "path": ["auth", "reset-password"]}
+					}
+				},
+				{
+					"name": "Get Current Profile",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/auth/me", "host": ["{{base_url}}"], "path": ["auth", "me"]}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Roles & Permissions",
+			"item": [
+				{
+					"name": "Create Permission",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"code\": \"reports.view\",\n  \"module\": \"reports\",\n  \"description\": \"View business reports\"\n}"},
+						"url": {"raw": "{{base_url}}/rbac/permissions", "host": ["{{base_url}}"], "path": ["rbac", "permissions"]}
+					}
+				},
+				{
+					"name": "Get All Permissions",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/rbac/permissions", "host": ["{{base_url}}"], "path": ["rbac", "permissions"]}
+					}
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"Store Manager\",\n  \"description\": \"Manages store daily ops\"\n}"},
+						"url": {"raw": "{{base_url}}/rbac/roles", "host": ["{{base_url}}"], "path": ["rbac", "roles"]}
+					}
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/rbac/roles", "host": ["{{base_url}}"], "path": ["rbac", "roles"]}
+					}
+				},
+				{
+					"name": "Assign Permissions to Role",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"permissionIds\": [\"11111111-1111-1111-1111-111111111111\"]\n}"},
+						"url": {"raw": "{{base_url}}/rbac/roles/22222222-2222-2222-2222-222222222222/permissions", "host": ["{{base_url}}"], "path": ["rbac", "roles", "22222222-2222-2222-2222-222222222222", "permissions"]}
+					}
+				},
+				{
+					"name": "Assign Role to User",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"userId\": \"33333333-3333-3333-3333-333333333333\",\n  \"roleId\": \"22222222-2222-2222-2222-222222222222\"\n}"},
+						"url": {"raw": "{{base_url}}/rbac/assign-user", "host": ["{{base_url}}"], "path": ["rbac", "assign-user"]}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Vehicles",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"Passenger Cars\",\n  \"code\": \"PC\"\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/categories", "host": ["{{base_url}}"], "path": ["vehicles", "categories"]}
+					}
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {"raw": "{{base_url}}/vehicles/categories", "host": ["{{base_url}}"], "path": ["vehicles", "categories"]}
+					}
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"Passenger Vehicles\"\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/categories/11111111-1111-1111-1111-111111111111", "host": ["{{base_url}}"], "path": ["vehicles", "categories", "11111111-1111-1111-1111-111111111111"]}
+					}
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/vehicles/categories/11111111-1111-1111-1111-111111111111", "host": ["{{base_url}}"], "path": ["vehicles", "categories", "11111111-1111-1111-1111-111111111111"]}
+					}
+				},
+				{
+					"name": "Create Brand",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"categoryId\": \"11111111-1111-1111-1111-111111111111\",\n  \"name\": \"Hyundai\",\n  \"code\": \"HYU\"\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/brands", "host": ["{{base_url}}"], "path": ["vehicles", "brands"]}
+					}
+				},
+				{
+					"name": "Get All Brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {"raw": "{{base_url}}/vehicles/brands", "host": ["{{base_url}}"], "path": ["vehicles", "brands"]}
+					}
+				},
+				{
+					"name": "Update Brand",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"code\": \"HYUNDAI\"\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/brands/22222222-2222-2222-2222-222222222222", "host": ["{{base_url}}"], "path": ["vehicles", "brands", "22222222-2222-2222-2222-222222222222"]}
+					}
+				},
+				{
+					"name": "Delete Brand",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/vehicles/brands/22222222-2222-2222-2222-222222222222", "host": ["{{base_url}}"], "path": ["vehicles", "brands", "22222222-2222-2222-2222-222222222222"]}
+					}
+				},
+				{
+					"name": "Create Model",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"brandId\": \"22222222-2222-2222-2222-222222222222\",\n  \"name\": \"i20\",\n  \"code\": \"I20\"\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/models", "host": ["{{base_url}}"], "path": ["vehicles", "models"]}
+					}
+				},
+				{
+					"name": "Get Models by Brand",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {"raw": "{{base_url}}/vehicles/models?brandId=22222222-2222-2222-2222-222222222222", "host": ["{{base_url}}"], "path": ["vehicles", "models"], "query": [{"key": "brandId", "value": "22222222-2222-2222-2222-222222222222"}]}
+					}
+				},
+				{
+					"name": "Update Model",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"Elite i20\"\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/models/33333333-3333-3333-3333-333333333333", "host": ["{{base_url}}"], "path": ["vehicles", "models", "33333333-3333-3333-3333-333333333333"]}
+					}
+				},
+				{
+					"name": "Delete Model",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/vehicles/models/33333333-3333-3333-3333-333333333333", "host": ["{{base_url}}"], "path": ["vehicles", "models", "33333333-3333-3333-3333-333333333333"]}
+					}
+				},
+				{
+					"name": "Create Variant",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"modelId\": \"33333333-3333-3333-3333-333333333333\",\n  \"name\": \"Asta\",\n  \"code\": \"ASTA\",\n  \"yearFrom\": 2018,\n  \"yearTo\": 2022\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/variants", "host": ["{{base_url}}"], "path": ["vehicles", "variants"]}
+					}
+				},
+				{
+					"name": "Get Variants by Model",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {"raw": "{{base_url}}/vehicles/variants?modelId=33333333-3333-3333-3333-333333333333", "host": ["{{base_url}}"], "path": ["vehicles", "variants"], "query": [{"key": "modelId", "value": "33333333-3333-3333-3333-333333333333"}]}
+					}
+				},
+				{
+					"name": "Update Variant",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"yearTo\": 2023\n}"},
+						"url": {"raw": "{{base_url}}/vehicles/variants/44444444-4444-4444-4444-444444444444", "host": ["{{base_url}}"], "path": ["vehicles", "variants", "44444444-4444-4444-4444-444444444444"]}
+					}
+				},
+				{
+					"name": "Delete Variant",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/vehicles/variants/44444444-4444-4444-4444-444444444444", "host": ["{{base_url}}"], "path": ["vehicles", "variants", "44444444-4444-4444-4444-444444444444"]}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Products & Inventory",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"Hyundai i20 Front Windshield\",\n  \"productType\": \"GLASS\",\n  \"hsnCode\": \"70072190\",\n  \"unit\": \"PCS\",\n  \"purchasePrice\": 2200.00,\n  \"sellingPrice\": 4000.00,\n  \"gstRate\": 28.00,\n  \"variantId\": \"66666666-6666-6666-6666-666666666666\",\n  \"glassPosition\": \"FRONT_WINDSHIELD\",\n  \"openingStock\": 10,\n  \"minStockLevel\": 5\n}"},
+						"url": {"raw": "{{base_url}}/products", "host": ["{{base_url}}"], "path": ["products"]}
+					}
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/products?search=Hyundai", "host": ["{{base_url}}"], "path": ["products"], "query": [{"key": "search", "value": "Hyundai"}]}
+					}
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/products/77777777-7777-7777-7777-777777777777", "host": ["{{base_url}}"], "path": ["products", "77777777-7777-7777-7777-777777777777"]}
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"sellingPrice\": 4500.00\n}"},
+						"url": {"raw": "{{base_url}}/products/77777777-7777-7777-7777-777777777777", "host": ["{{base_url}}"], "path": ["products", "77777777-7777-7777-7777-777777777777"]}
+					}
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/products/77777777-7777-7777-7777-777777777777", "host": ["{{base_url}}"], "path": ["products", "77777777-7777-7777-7777-777777777777"]}
+					}
+				},
+				{
+					"name": "Add Vehicle Compatibility (Link)",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"variantId\": \"88888888-8888-8888-8888-888888888888\",\n  \"glassPosition\": \"FRONT_WINDSHIELD\"\n}"},
+						"url": {"raw": "{{base_url}}/products/77777777-7777-7777-7777-777777777777/compatibility", "host": ["{{base_url}}"], "path": ["products", "77777777-7777-7777-7777-777777777777", "compatibility"]}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Suppliers & Purchases",
+			"item": [
+				{
+					"name": "Create Supplier",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"AIS Glass Wholesale\",\n  \"gstin\": \"29ABCDE1234F1Z5\",\n  \"phone\": \"9876543210\",\n  \"email\": \"contact@aisglass.com\",\n  \"address\": \"Mumbai, India\"\n}"},
+						"url": {"raw": "{{base_url}}/suppliers", "host": ["{{base_url}}"], "path": ["suppliers"]}
+					}
+				},
+				{
+					"name": "Get All Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/suppliers", "host": ["{{base_url}}"], "path": ["suppliers"]}
+					}
+				},
+				{
+					"name": "Get Supplier by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/suppliers/99999999-9999-9999-9999-999999999999", "host": ["{{base_url}}"], "path": ["suppliers", "99999999-9999-9999-9999-999999999999"]}
+					}
+				},
+				{
+					"name": "Update Supplier",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"phone\": \"9999999999\"\n}"},
+						"url": {"raw": "{{base_url}}/suppliers/99999999-9999-9999-9999-999999999999", "host": ["{{base_url}}"], "path": ["suppliers", "99999999-9999-9999-9999-999999999999"]}
+					}
+				},
+				{
+					"name": "Delete Supplier",
+					"request": {
+						"method": "DELETE",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/suppliers/99999999-9999-9999-9999-999999999999", "host": ["{{base_url}}"], "path": ["suppliers", "99999999-9999-9999-9999-999999999999"]}
+					}
+				},
+				{
+					"name": "Create Draft Purchase",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"supplierId\": \"99999999-9999-9999-9999-999999999999\",\n  \"invoiceNumber\": \"SUP-1010\",\n  \"purchaseDate\": \"2026-10-09T00:00:00Z\",\n  \"subTotal\": 3000,\n  \"taxAmount\": 840,\n  \"discount\": 0,\n  \"grandTotal\": 3840,\n  \"items\": [\n    {\n      \"productId\": \"77777777-7777-7777-7777-777777777777\",\n      \"quantity\": 2,\n      \"unitPrice\": 1500,\n      \"hsnCode\": \"70072190\",\n      \"gstRate\": 28,\n      \"taxAmount\": 840,\n      \"total\": 3840\n    }\n  ]\n}"},
+						"url": {"raw": "{{base_url}}/purchases", "host": ["{{base_url}}"], "path": ["purchases"]}
+					}
+				},
+				{
+					"name": "Get All Purchases",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/purchases", "host": ["{{base_url}}"], "path": ["purchases"]}
+					}
+				},
+				{
+					"name": "Get Purchase by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/purchases/10101010-1010-1010-1010-101010101010", "host": ["{{base_url}}"], "path": ["purchases", "10101010-1010-1010-1010-101010101010"]}
+					}
+				},
+				{
+					"name": "Post Purchase (Updates Stock!)",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/purchases/10101010-1010-1010-1010-101010101010/post", "host": ["{{base_url}}"], "path": ["purchases", "10101010-1010-1010-1010-101010101010", "post"]}
+					}
+				},
+				{
+					"name": "Add Supplier Payment",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"amount\": 3840,\n  \"paymentMethod\": \"BANK_TRANSFER\",\n  \"referenceNo\": \"NEFT123456789\",\n  \"paymentDate\": \"2026-10-09T00:00:00Z\"\n}"},
+						"url": {"raw": "{{base_url}}/purchases/10101010-1010-1010-1010-101010101010/payments", "host": ["{{base_url}}"], "path": ["purchases", "10101010-1010-1010-1010-101010101010", "payments"]}
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Customers & Sales POS",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"name\": \"Rahul Walk-in\",\n  \"phone\": \"9988776655\",\n  \"email\": \"rahul@example.com\",\n  \"gstin\": \"29ABCDE1234F1Z5\",\n  \"address\": \"Delhi\",\n  \"stateCode\": \"07\"\n}"},
+						"url": {"raw": "{{base_url}}/customers", "host": ["{{base_url}}"], "path": ["customers"]}
+					}
+				},
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/customers", "host": ["{{base_url}}"], "path": ["customers"]}
+					}
+				},
+				{
+					"name": "Get Customer by ID",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/customers/20202020-2020-2020-2020-202020202020", "host": ["{{base_url}}"], "path": ["customers", "20202020-2020-2020-2020-202020202020"]}
+					}
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PATCH",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"phone\": \"8888888888\"\n}"},
+						"url": {"raw": "{{base_url}}/customers/20202020-2020-2020-2020-202020202020", "host": ["{{base_url}}"], "path": ["customers", "20202020-2020-2020-2020-202020202020"]}
+					}
+				},
+				{
+					"name": "Create Draft Sale",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"customerId\": \"20202020-2020-2020-2020-202020202020\",\n  \"subTotal\": 3500,\n  \"taxAmount\": 980,\n  \"cgstAmount\": 490,\n  \"sgstAmount\": 490,\n  \"igstAmount\": 0,\n  \"discount\": 0,\n  \"grandTotal\": 4480,\n  \"items\": [\n    {\n      \"productId\": \"77777777-7777-7777-7777-777777777777\",\n      \"productName\": \"Hyundai Santro Windshield\",\n      \"sku\": \"GLS-SAN-FR\",\n      \"hsnCode\": \"70072190\",\n      \"quantity\": 1,\n      \"unitPrice\": 3500,\n      \"discount\": 0,\n      \"taxableValue\": 3500,\n      \"gstRate\": 28,\n      \"cgstAmount\": 490,\n      \"sgstAmount\": 490,\n      \"igstAmount\": 0,\n      \"totalAmount\": 4480\n    }\n  ]\n}"},
+						"url": {"raw": "{{base_url}}/sales", "host": ["{{base_url}}"], "path": ["sales"]}
+					}
+				},
+				{
+					"name": "Get All Sales",
+					"request": {
+						"method": "GET",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/sales", "host": ["{{base_url}}"], "path": ["sales"]}
+					}
+				},
+				{
+					"name": "Post Sale (Deducts Stock!)",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}],
+						"url": {"raw": "{{base_url}}/sales/30303030-3030-3030-3030-303030303030/post", "host": ["{{base_url}}"], "path": ["sales", "30303030-3030-3030-3030-303030303030", "post"]}
+					}
+				},
+				{
+					"name": "Add Customer Payment",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Authorization", "value": "Bearer {{admin_token}}"}, {"key": "Content-Type", "value": "application/json"}],
+						"body": {"mode": "raw", "raw": "{\n  \"amount\": 4480,\n  \"paymentMethod\": \"CASH\",\n  \"paymentDate\": \"2026-10-09T00:00:00Z\"\n}"},
+						"url": {"raw": "{{base_url}}/sales/30303030-3030-3030-3030-303030303030/payments", "host": ["{{base_url}}"], "path": ["sales", "30303030-3030-3030-3030-303030303030", "payments"]}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "PASTE_TOKEN_HERE",
+			"type": "string"
+		}
+	]
 }

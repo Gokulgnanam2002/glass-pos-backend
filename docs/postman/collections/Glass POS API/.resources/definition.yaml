@@ -1,5 +1,0 @@
-$kind: collection
-description: API Collection for Glass POS Backend
-variables:
-  baseUrl: http://localhost:3000/api
-  token: ""
